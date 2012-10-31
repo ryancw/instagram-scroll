@@ -4,6 +4,7 @@
 *	Written by Ryan Williams
 *	Scroll thanks to Ali Ukani 
 *	October 2012
+* Last update: Oct 31, 2012
 */
 
 /**********
@@ -50,7 +51,10 @@ function ProcessData(response){
 			if(index == 20)
 				return response.pagination.next_url;
 			var link = $('<a/>'), image = $('<img/>'), li = $('<li/>');
-			image.attr({'src': obj.images.thumbnail.url,'width':thumb_dimension,'height': thumb_dimension});
+			image.attr({'src': obj.images.low_resolution.url, // options: low_resolution (300 x 300)
+                                                        // standard_resolution (600 x 600)
+                                                        // thumbnail (150 x 150)
+        'width':thumb_dimension,'height': thumb_dimension});
 			link.attr('href',obj.link);
 			image.appendTo(link);
 			link.appendTo(li);
