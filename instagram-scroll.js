@@ -59,7 +59,7 @@ function ProcessData(response){
 			image.appendTo(link);
 			link.appendTo(li);
 			if(include_username){
-				$('<div class="username">'+obj.from.username+'</div>').appendTo(li);
+				$('<div class="username">'+obj.caption.from.username+'</div>').appendTo(li);
 			}
 			if(include_caption){
 				$('<div class="caption">'+obj.caption.text+'</div>').appendTo(li);
