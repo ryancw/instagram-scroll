@@ -1,112 +1,91 @@
-/* Instagram tag grabber/infinite scroller
-*   Just add "return LoadResults();" in a JS function on the
-*      webpage to get working
-*	Written by Ryan Williams
-*	Scroll thanks to Ali Ukani
-*	October 2012
-* Last update: Oct 28, 2013
-*/
+/*
+ * @author Ryan Williams / http://ryancw.com
+ */
 
-(function ($) {
-  $.fn.instagramScroll = function(options) {
-  /**********
-  *  Setup  *
-  ***********/
+function InstagramScroll(opts){
 
-  var tagName = 'TAG_NAME';
-  var clientId = 'CLIENT_ID';
-  var thumbDimension = 220;
-  var includeCaption = false;
-  var includeUsername = false;
+  this.opts = opts;
+  if (!(this.opts.tagName || this.opts.clientID || this.opts.imageContainer)) {
+    throw "Error: tagName, clientID, and imageContainer must be passed to InstagramScroll.";
+  }
+  this.tagName = this.opts.tagName;
+  this.clientID = this.opts.clientID;
+  this.imageContainer = this.opts.imageContainer;
+  this.includeCaption = this.opts.includeCaption;
+  this.includeUsername = this.opts.includeUsername;
+  this.imageQuality = this.opts.imageQuality || 'standard_resolution';
+  this.imageSize = this.opts.imageSize || 200;
+   // options: low_resolution (300 x 300)
+   // standard_resolution (600 x 600)
+   // thumbnail (150 x 150)
+  this.scrollDistance = this.opts.scrollDistance || 350;
 
-  var url = 'https://api.instagram.com/v1/tags/'+tag_name+'/media/recent?client_id='+client_id;
 
-  /************************
-  *   Load and Process    *
-  *************************/
+  var url = 'https://api.instagram.com/v1/tags/'
+            + this.tagName
+            + '/media/recent?client_id='
+            + this.clientID;
 
-  // Grab JSON data from Instagram
-  function loadResults(){
-  		$.ajax({
-  			dataType:'jsonp',
-  			url:url,
-  			success:function(response){
-  				return processData(response);
-  			}
-  		});
-  	};
-
-  // Process JSON data by creating a <ul> and adding each image
-  // as a <li>
-  function processData(response){
-  	if(response != null){
-  		var ul = $('<ul/>');
-  		ul.attr({'class': tag_name});
-
-  		$(response.data).each(function(index,obj){
-  			if(index == 20)
-  				return response.pagination.next_url;
-  			var link = $('<a/>'), image = $('<img/>'), li = $('<li/>');
-  			image.attr({'src': obj.images.low_resolution.url, // options: low_resolution (300 x 300)
-                                                          // standard_resolution (600 x 600)
-                                                          // thumbnail (150 x 150)
-          'width':thumb_dimension,'height': thumb_dimension});
-  			link.attr('href',obj.link);
-  			image.appendTo(link);
-  			link.appendTo(li);
-  			if(include_username){
-  				$('<div class="username">'+obj.caption.from.username+'</div>').appendTo(li);
-  			}
-  			if(include_caption){
-  				$('<div class="caption">'+obj.caption.text+'</div>').appendTo(li);
-  			}
-  			// Append the image (and text) to the list
-  			ul.append(li);
-  		});
-  		// Append the list to the given div
-  		$(div_to_add_pics).append(ul);
-  		// make url correlate to the next set of data
-  		url = response.pagination.next_url;
-
-  	}
+  function _loadResults(){
+    $.ajax({
+      dataType: 'jsonp',
+      url: url,
+      success: function(response){
+        return _processData(response);
+      }
+    });
   };
 
-  /*********
-   * Setup *
-   *********/
+  function _processData(response){
+    if(response != null){
+      var ul = $('<ul/>');
+      ul.attr({'class': this.tagName});
+
+      $(response.data).each(function(index,obj){
+        if(index == 20)
+          return response.pagination.next_url;
+
+        var link = $('<a/>'), image = $('<img/>'), li = $('<li/>');
+        image.attr({'src': obj.images[this.imageQuality].url,
+          'width': this.imageSize, 'height': this.imageSize});
+        link.attr('href',obj.link);
+        image.appendTo(link);
+        link.appendTo(li);
+        if(this.includeUsername){
+          $('<div class="username">'+obj.caption.from.username+'</div>').appendTo(li);
+        }
+        if(this.includeCaption){
+          $('<div class="caption">'+obj.caption.text+'</div>').appendTo(li);
+        }
+        ul.append(li);
+      });
+
+      $(this.imageContainer).append(ul);
+      url = response.pagination.next_url;
+    }
+  };
 
   var nextLink = false;
   var loadingImages = false;
 
-  /******************
-   *     Scroll	 *
-   ******************/
-
-  /* Loads the next set of images and appends them to #div_to_add_pics */
-  function loadNext() {
-    	// Prevent (redundantly) loading images if we're already loading them,
-    	// and prevent us from entering an infinite loop
-    	if (loadingImages || nextLink == url) {
-    	  return false;
-    	}else{
-  	// We are now loading images!
-  	loadingImages = true;
-
-  	LoadResults();
-  	nextLink = url;
-
-      // Aaaaaand we're done loading.
+  function _loadNext() {
+    if (loadingImages || nextLink == url) {
+      return false;
+    }else{
+      loadingImages = true;
+      _loadResults();
+      nextLink = url;
       loadingImages = false;
     }
-
   }
 
-  /* When the user scrolls to the bottom of the page, load the next set
-   * of images */
   $(window).scroll(function() {
-    var offset = 350; // Change for distance to load
-    if($(window).scrollTop() + $(window).height() > $(document).height() - offset) {
-      loadNext();
+    if($(window).scrollTop() + $(window).height() >
+       $(document).height() - this.scrollDistance) {
+      _loadNext();
     }
   });
-})(jQuery);
+
+  _loadResults();
+ }
+
