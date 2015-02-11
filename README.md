@@ -6,6 +6,7 @@ Simple JavaScript file to load Instagram pictures of a certain tag and infinite 
 <h2><b>Use</b></h2>
 
 Link to the instagram-scroll.js source file in your webpage.
+JQuery is required.
 
 Add the following code to webpage:
 ```
