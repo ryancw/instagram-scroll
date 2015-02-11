@@ -6,6 +6,7 @@ Simple JavaScript file to load Instagram pictures of a certain tag and infinite 
 <h2><b>Use</b></h2>
 
 Link to the instagram-scroll.js source file in your webpage.
+JQuery is required.
 
 Add the following code to webpage:
 ```
@@ -26,3 +27,6 @@ The three necessary parameters for using the function are:
 Optional parameters include:
 * `includeCaption` - add the caption in text after the picture
 * `includeUsername` - add the username in text after the picture
+
+<h2><b>Demo</b></h2>
+A sample of the script in action can be seen [here](http://www.ryancw.com/scroll-test.html).
