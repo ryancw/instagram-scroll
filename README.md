@@ -19,7 +19,7 @@ This will add a `ul` to any object on the page with an ID of 'pics' filled with 
 <h2><b>Parameters</b></h2>
 
 The three necessary parameters for using the function are:
-* `tag`/`user  - search term or user name for the images
+* `tag`/`user`  - search term or user name for the images
 * `clientID` - given through the Instagram Developer API
 * `imageContainer` - the DOM element where the `ul` containing the images will be inserted
 
