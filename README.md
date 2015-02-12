@@ -26,7 +26,7 @@ The three necessary parameters for using the function are:
 Optional parameters include:
 * `includeCaption` - add the caption in text after the picture. Default is `false`.
 * `includeUsername` - add the username in text after the picture. Default is `false`.
-* `scrollDistance` - distance in pixels from bottom of page. Default is `350`.
+* `scrollDistance` - distance in pixels from bottom of page scroll bar needs to be for new images to be loaded. Default is `350`.
 * `imageSize` - size in pixels of the <img> loaded. Default is `200`.
 * `imageQuality` - size of image loaded, can either be 'thumbnail', 'low_resolution', or 'standard_resolution'. Default is `standard_resolution`.
 
