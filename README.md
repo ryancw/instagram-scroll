@@ -1,14 +1,13 @@
 instagram-scroll
 ================
 
-Simple JavaScript file to load Instagram pictures of a certain tag and infinite scroll through them.
+Simple JavaScript file to load Instagram pictures of a certain tag or user and infinite scroll through them.
 
 <h2><b>Use</b></h2>
 
 Link to the instagram-scroll.js source file in your webpage.
 JQuery is required.
 
-Add the following code to webpage:
 ```
 <script>
 InstgramScroll({tag: "cats", clientID: "token", imageContainer: "#pics"})
@@ -20,13 +19,16 @@ This will add a `ul` to any object on the page with an ID of 'pics' filled with 
 <h2><b>Parameters</b></h2>
 
 The three necessary parameters for using the function are:
-* `tag` - search term for the images loaded
+* `tag`/`user  - search term or user name for the images
 * `clientID` - given through the Instagram Developer API
 * `imageContainer` - the DOM element where the `ul` containing the images will be inserted
 
 Optional parameters include:
 * `includeCaption` - add the caption in text after the picture
 * `includeUsername` - add the username in text after the picture
+* `scrollDistance` - distance in pixels from bottom of page
+* `imageSize` - size in pixels of the <img> loaded
+* `imageQuality` - size of image loaded, can either be 'thumbnail', 'low_resolution', or 'standard_resolution' Default is standard.
 
 <h2><b>Demo</b></h2>
 A sample of the script in action can be seen [here](http://www.ryancw.com/scroll-test.html).
