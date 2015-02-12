@@ -24,11 +24,11 @@ The three necessary parameters for using the function are:
 * `imageContainer` - the DOM element where the `ul` containing the images will be inserted
 
 Optional parameters include:
-* `includeCaption` - add the caption in text after the picture
-* `includeUsername` - add the username in text after the picture
-* `scrollDistance` - distance in pixels from bottom of page
-* `imageSize` - size in pixels of the <img> loaded
-* `imageQuality` - size of image loaded, can either be 'thumbnail', 'low_resolution', or 'standard_resolution' Default is standard.
+* `includeCaption` - add the caption in text after the picture. Default is `false`.
+* `includeUsername` - add the username in text after the picture. Default is `false`.
+* `scrollDistance` - distance in pixels from bottom of page. Default is `350`.
+* `imageSize` - size in pixels of the <img> loaded. Default is `200`.
+* `imageQuality` - size of image loaded, can either be 'thumbnail', 'low_resolution', or 'standard_resolution'. Default is `standard_resolution`.
 
 <h2><b>Demo</b></h2>
 A sample of the script in action can be seen [here](http://www.ryancw.com/scroll-test.html).
