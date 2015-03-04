@@ -10,7 +10,7 @@ JQuery is required.
 
 ```
 <script>
-InstgramScroll({tag: "cats", clientID: "token", imageContainer: "#pics"})
+InstagramScroll({tag: "cats", clientID: "token", imageContainer: "#pics"})
 </script>
 ```
 
